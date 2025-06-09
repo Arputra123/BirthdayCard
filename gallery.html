@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gallery Kita ❤️</title>
+    <style>
+      body {
+        background-color: #0f0f0f;
+        color: #00ff88;
+        font-family: "Courier New", Courier, monospace;
+        padding: 2rem;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      .love-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        overflow: hidden;
+        z-index: 0;
+      }
+
+      .love {
+        position: absolute;
+        font-size: 16px;
+        color: #ff007f;
+        opacity: 0.8;
+        animation: floatUp linear infinite;
+        font-family: monospace;
+        text-shadow: 0 0 5px #ff007f;
+        user-select: none;
+      }
+
+      @keyframes floatUp {
+        0% {
+          transform: translateY(100vh) scale(1);
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-10vh) scale(1.5);
+          opacity: 0;
+        }
+      }
+
+      h1 {
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        user-select: none;
+      }
+
+      .carousel {
+        width: 90%;
+        max-width: 800px;
+        aspect-ratio: 16 / 9;
+        overflow: hidden;
+        border-radius: 10px;
+        box-shadow: 0 0 20px #00ff88;
+        position: relative;
+        margin-bottom: 2rem;
+        background: #000;
+      }
+
+      .carousel-slide {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        animation: slide 60s linear infinite;
+      }
+
+      .carousel-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        flex-shrink: 0;
+        border-radius: 10px;
+      }
+
+      @keyframes slide {
+        0% {
+          transform: translateX(0);
+        }
+        10% {
+          transform: translateX(-100%);
+        }
+        20% {
+          transform: translateX(-200%);
+        }
+        30% {
+          transform: translateX(-300%);
+        }
+        40% {
+          transform: translateX(-400%);
+        }
+        50% {
+          transform: translateX(-500%);
+        }
+        60% {
+          transform: translateX(-600%);
+        }
+        70% {
+          transform: translateX(-700%);
+        }
+        80% {
+          transform: translateX(-800%);
+        }
+        90% {
+          transform: translateX(-900%);
+        }
+        100% {
+          transform: translateX(-900%);
+        }
+      }
+
+      button {
+        padding: 12px 25px;
+        font-family: "Courier New", Courier, monospace;
+        background: #00ff88;
+        color: #000;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+        box-shadow: 0 0 15px #00ff88;
+        transition: background 0.3s ease;
+        font-weight: bold;
+        margin-bottom: 3rem;
+      }
+
+      button:hover {
+        background: #00dd77;
+      }
+
+      .music-btn {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        font-size: 12px;
+        padding: 6px 12px;
+        z-index: 99;
+      }
+
+      .music-caption {
+        position: fixed;
+        top: 45px;
+        right: 14px;
+        font-size: 10px;
+        color: #999;
+        font-family: monospace;
+        z-index: 99;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="love-container" id="loveContainer"></div>
+
+    <h1>Gallery Kita ❤️</h1>
+
+    <div class="carousel">
+      <div class="carousel-slide">
+        <img src="images/foto1.jpg" alt="Foto 1" />
+        <img src="images/Foto2.JPG" alt="Foto 2" />
+        <img src="images/Foto3.jpg" alt="Foto 3" />
+        <img src="images/Foto4.jpeg" alt="Foto 4" />
+        <img src="images/Foto5.jpeg" alt="Foto 5" />
+        <img src="images/Foto6.JPG" alt="Foto 6" />
+        <img src="images/Foto7.jpg" alt="Foto 7" />
+        <img src="images/Foto8.jpg" alt="Foto 8" />
+        <img src="images/Foto9.jpg" alt="Foto 9" />
+        <img src="images/Foto10.jpg" alt="Foto 10" />
+      </div>
+    </div>
+
+    <div style="text-align: center; width: 100%">
+      <button id="btn-to-blow">Ke Tiup Lilin 🎂</button>
+    </div>
+
+    <button class="music-btn" id="playMusic">▶ Play Musik</button>
+    <div class="music-caption">Klik kalo kamu mau dengerin 💖</div>
+
+    <audio id="backsound" preload="auto" loop>
+      <source src="Gallerysound.mp3" type="audio/mpeg" />
+      Browser kamu gak support audio 😢
+    </audio>
+
+    <script>
+      const loveContainer = document.getElementById("loveContainer");
+      const btnToBlow = document.getElementById("btn-to-blow");
+      const backsound = document.getElementById("backsound");
+      const playMusicBtn = document.getElementById("playMusic");
+
+      function createLove() {
+        const love = document.createElement("div");
+        love.classList.add("love");
+        love.textContent = "❤";
+        love.style.left = Math.random() * 100 + "vw";
+        love.style.animationDuration = 3 + Math.random() * 5 + "s";
+        love.style.fontSize = 12 + Math.random() * 20 + "px";
+        loveContainer.appendChild(love);
+        setTimeout(() => love.remove(), 8000);
+      }
+
+      setInterval(createLove, 200);
+
+      btnToBlow.addEventListener("click", () => {
+        const clickSound = new Audio("https://cdn.freesound.org/previews/341/341695_6248684-lq.mp3");
+        clickSound.play();
+        setTimeout(() => {
+          window.location.href = "kue.html";
+        }, 300);
+      });
+
+      playMusicBtn.addEventListener("click", () => {
+        backsound.play();
+        playMusicBtn.disabled = true;
+        playMusicBtn.innerText = "🎵 Musik Dimainkan";
+      });
+    </script>
+  </body>
+</html>

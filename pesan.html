@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pesan Untuk Kamu ❤️</title>
+    <style>
+      body {
+        background-color: #0f0f0f;
+        color: #00ff88;
+        font-family: "Courier New", Courier, monospace;
+        padding: 2rem;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow: hidden;
+        position: relative;
+      }
+      .terminal {
+        background: #1e1e1e;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 0 20px #00ff88;
+        max-width: 700px;
+        width: 100%;
+        max-height: 60vh;
+        overflow-y: auto;
+        margin-bottom: 1rem;
+        position: relative;
+        z-index: 1;
+        color: #00ff88;
+        user-select: text;
+        text-align: justify;
+        line-height: 1.5;
+        font-size: 1.05rem;
+      }
+      .terminal p {
+        margin: 1rem 0;
+      }
+      button {
+        padding: 10px 20px;
+        font-family: "Courier New", Courier, monospace;
+        background: #00ff88;
+        color: #000;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        user-select: none;
+        z-index: 2;
+        opacity: 0.5;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+      }
+      button.enabled {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      /* Tombol musik versi kecil, bulat tanpa animasi */
+      #musicControl {
+        position: fixed;
+        top: 15px;
+        right: 15px;
+        background: #00ff88;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 10;
+        box-shadow: 0 0 10px #00ff88;
+        transition: background-color 0.3s ease;
+      }
+      #musicControl:hover {
+        background: #00cc6a;
+      }
+      #musicIcon {
+        font-size: 20px;
+        color: #000;
+        pointer-events: none;
+      }
+      #musicCaption {
+        position: fixed;
+        top: 60px;
+        right: 10px;
+        font-size: 12px;
+        color: #00ff88;
+        width: 140px;
+        text-align: center;
+        font-family: monospace;
+        user-select: none;
+      }
+      .love-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        overflow: hidden;
+        z-index: 0;
+      }
+      .love {
+        position: absolute;
+        font-size: 16px;
+        color: #ff007f;
+        opacity: 0.8;
+        animation: floatUp linear infinite;
+        font-family: monospace;
+        text-shadow: 0 0 5px #ff007f;
+        user-select: none;
+      }
+      @keyframes floatUp {
+        0% {
+          transform: translateY(100vh) scale(1);
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-10vh) scale(1.5);
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="love-container" id="loveContainer"></div>
+
+    <div class="terminal" id="terminal"></div>
+    <button id="btn">Lanjut ▶️</button>
+
+    <!-- Backsound lagu romantis -->
+    <audio id="backsound" preload="auto" loop>
+      <source src="bgsoundpesan1.mp3" type="audio/mpeg" />
+      Browser gak support audio nih.
+    </audio>
+
+    <!-- Tombol play/pause musik -->
+    <div id="musicControl" title="Klik untuk play/pause musik">
+      <div id="musicIcon">▶️</div>
+    </div>
+    <div id="musicCaption">Klik tombol ini buat dengerin musik 🎶</div>
+
+    <script>
+      const terminal = document.getElementById("terminal");
+      const btn = document.getElementById("btn");
+      const backsound = document.getElementById("backsound");
+      const loveContainer = document.getElementById("loveContainer");
+      const musicControl = document.getElementById("musicControl");
+      const musicIcon = document.getElementById("musicIcon");
+      const musicCaption = document.getElementById("musicCaption");
+
+      const paragraphs = [
+        "Dear Sayangku,",
+        "Arum Nabila.",
+        "Makasih udah klik tombol untuk baca pesan ini",
+        `Jadi ini pesan dari mas untuk adek, Sayanggku mas ucapin selamat ulang tahun yang ke 27 tahun ya, yeyyy!!`,
+        `Meski pesan ini mas sampaikan sebelum tanggal atau hari ulang tahun adek, tapi pesan ini bisa adek play setiap saat kok.`,
+        `Mas harap sih pesan ini adalah pesan yang sangat berbeda dari orang-orang yang sebelumnya pernah hadir dalam kehidupan adek hehe, "maklum gue kan si paling IT 😁".`,
+        `Oiyaaa pesan ini mas koding dengan kreatifitas mas sendiri lhoo tanpa menggunakan template jadi bener-bener dari "NOL".`,
+        `Ini baru paragraph pertama, nah ada 10 paragraph lagi yang harus adek baca wkwkwk.`,
+        `Boong ihhh..., ini baru intermeso atau pembukaannya kalo penasaran klik tombol di bawah ini ya buat nerusin ke pesan berikutnya yang bakal lebih deep for youuuuu.`,
+      ];
+
+      async function typeWriterParagraphs(paragraphs, container, delay = 20) {
+        container.innerHTML = "";
+        for (const para of paragraphs) {
+          let p = document.createElement("p");
+          container.appendChild(p);
+          for (let i = 0; i < para.length; i++) {
+            p.textContent += para.charAt(i);
+            container.scrollTop = container.scrollHeight;
+            await new Promise((r) => setTimeout(r, delay));
+          }
+        }
+        btn.classList.add("enabled");
+      }
+
+      btn.addEventListener("click", () => {
+        backsound.pause();
+        window.location.href = "pesanutama.html";
+      });
+
+      function createLove() {
+        const love = document.createElement("div");
+        love.classList.add("love");
+        love.textContent = "❤";
+        love.style.left = Math.random() * 100 + "vw";
+        love.style.animationDuration = 3 + Math.random() * 5 + "s";
+        love.style.fontSize = 12 + Math.random() * 20 + "px";
+        loveContainer.appendChild(love);
+        setTimeout(() => love.remove(), 8000);
+      }
+
+      setInterval(createLove, 200);
+
+      musicControl.addEventListener("click", () => {
+        if (backsound.paused) {
+          backsound.play();
+          musicIcon.textContent = "⏸️";
+          musicCaption.textContent = "Musik lagi diputar, nikmatin ya 🎶";
+        } else {
+          backsound.pause();
+          musicIcon.textContent = "▶️";
+          musicCaption.textContent = "Klik tombol ini buat dengerin musik 🎶";
+        }
+      });
+
+      window.addEventListener("load", () => {
+        backsound
+          .play()
+          .then(() => {
+            musicIcon.textContent = "⏸️";
+            musicCaption.textContent = "Musik lagi diputar, nikmatin ya 🎶";
+          })
+          .catch(() => {
+            // kalau autoplay gak jalan, biarin aja
+          });
+        typeWriterParagraphs(paragraphs, terminal);
+      });
+    </script>
+  </body>
+</html>
